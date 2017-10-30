@@ -62,6 +62,10 @@ void Model01::setup(void) {
   TWBR = 12; // This is 400mhz, which is the fastest we can drive the ATTiny
 }
 
+void Model01::setKeyscanInterval(byte delay) {
+  leftHand.setKeyscanInterval(delay);
+  rightHand.setKeyscanInterval(delay);
+}
 
 void Model01::setCrgbAt(uint8_t i, cRGB crgb) {
   if (i < 32) {

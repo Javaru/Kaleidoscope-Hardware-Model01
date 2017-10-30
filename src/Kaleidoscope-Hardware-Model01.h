@@ -4,30 +4,33 @@
 
 #define HARDWARE_IMPLEMENTATION Model01
 #include "KeyboardioScanner.h"
+#include "Kaleidoscope-Hardware.h"
 
 #define COLS 16
 #define ROWS 4
 
 #define CRGB(r,g,b) (cRGB){b, g, r}
 
-class Model01 {
+class Model01 : private kaleidoscope::Hardware {
  public:
   Model01(void);
-  void syncLeds(void);
-  void setCrgbAt(byte row, byte col, cRGB color);
-  void setCrgbAt(uint8_t i, cRGB crgb);
-  cRGB getCrgbAt(uint8_t i);
+  void syncLeds(void) final;
+  void setCrgbAt(byte row, byte col, cRGB color) final;
+  void setCrgbAt(uint8_t i, cRGB crgb) final;
+  cRGB getCrgbAt(uint8_t i) final;
   uint8_t getLedIndex(byte row, byte col);
 
-  void scanMatrix(void);
-  void readMatrix(void);
-  void actOnMatrixScan(void);
-  void setup();
+  void scanMatrix(void) final;
+  void readMatrix(void) final;
+  void actOnMatrixScan(void) final;
+  void setup() final;
   void enableHighPowerLeds(void);
   void enableScannerPower(void);
   void rebootBootloader();
 
   boolean ledPowerFault(void);
+
+  void setKeyscanInterval(byte delay);
 
   /* Key masking
    * -----------
@@ -38,10 +41,10 @@ class Model01 {
    *
    * See `handleKeyswitchEvent` in the Kaleidoscope sources for a use-case.
    */
-  void maskKey(byte row, byte col);
-  void unMaskKey(byte row, byte col);
-  bool isKeyMasked(byte row, byte col);
-  void maskHeldKeys(void);
+  void maskKey(byte row, byte col) final;
+  void unMaskKey(byte row, byte col) final;
+  bool isKeyMasked(byte row, byte col) final;
+  void maskHeldKeys(void) ;
 
   keydata_t leftHandState;
   keydata_t rightHandState;
